@@ -1,2 +1,3 @@
 # Next.js
-Start Next JS
+
+Starting to learn Next JS
