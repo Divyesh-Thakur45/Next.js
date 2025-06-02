@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 
 export default function Navigation() {
@@ -23,6 +24,9 @@ export default function Navigation() {
                         </li>
                         <li>
                             <Link href="/product" className="hover:text-gray-300">Product</Link>
+                        </li>
+                        <li>
+                            <Link href="/blog" className="hover:text-gray-300">blog</Link>
                         </li>
                     </ul>
                 </div>
