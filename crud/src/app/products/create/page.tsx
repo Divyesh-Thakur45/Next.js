@@ -1,14 +1,20 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Createproducts() {
+    const router = useRouter()
     const [name, setName] = useState<string>("")
     const [stream, setStream] = useState<string>("")
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (!name || !stream) return;
         e.preventDefault()
-        axios.post("http://localhost:3000/api/products", { name, stream }).then((res) => console.log(res.data))
+        axios.post("http://localhost:3000/api/products", { name, stream }).then((res) => {
+            console.log(res.data);
+            router.push("/products");
+        })
             .catch((err) => console.error(err.message))
     }
     return (

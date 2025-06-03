@@ -1,17 +1,20 @@
 "use client";
 
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Createproducts() {
+    const router = useRouter()
     const { id } = useParams()
-    console.log(id)
     const [name, setName] = useState<string>("")
     const [stream, setStream] = useState<string>("")
     const HandleUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        axios.patch(`http://localhost:3000/api/products/${id}`, { name, stream }).then((res) => console.log(res.data))
+        axios.patch(`http://localhost:3000/api/products/${id}`, { name, stream }).then((res) => {
+            console.log(res.data);
+            router.push("/products");
+        })
             .catch((err) => console.error(err.message))
     }
     useEffect(() => {

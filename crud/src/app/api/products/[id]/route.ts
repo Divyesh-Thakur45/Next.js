@@ -3,7 +3,7 @@ import { products } from "../../../../../db/data";
 
 
 export async function GET(_:Request , {params} : {params : {id : string}}) {
-   const product = await products.find((e)=>e.id == parseInt(params.id))
+   const product = await products.find((e)=>e?.id == parseInt(params?.id))
    if(!product){
     return NextResponse.json({
         status : 401,
