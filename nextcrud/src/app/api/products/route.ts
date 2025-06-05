@@ -1,9 +1,9 @@
 import connectDB from "@/_lib/mongodb"
-import productModel from "@/models/Post"
+import productModel from "@/models/Product"
 import { NextRequest, NextResponse } from "next/server"
 
 
-
+// GET function for get all products
 export async function GET() {
     try {
         await connectDB()
@@ -16,16 +16,14 @@ export async function GET() {
         })
     } catch (error) {
         console.log(error)
-    }
-    
+    }   
 }
 
-
-export async function POST(requvest:NextRequest) {
-    
+//POST function for create product 
+export async function POST(request:NextRequest) {
     try {
         await connectDB()
-        const body = await requvest.json();
+        const body = await request.json();
         const {title , price , description } = body;
 
         if(!title || !price || !description){

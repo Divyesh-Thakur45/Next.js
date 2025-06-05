@@ -10,7 +10,8 @@ export default function Createproducts() {
     const [title, setTitle] = useState<string>("")
     const [price, setPirce] = useState<string>("")
     const [description, setdescription] = useState<string>("")
-    const HandleUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+    const handleUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         axios.patch(`http://localhost:3000/api/products/${id}`, { title, price, description }).then((res) => {
             console.log(res.data);
@@ -18,15 +19,17 @@ export default function Createproducts() {
         })
             .catch((err) => console.error(err.message))
     }
+
     useEffect(() => {
         axios.get(`http://localhost:3000/api/products/${id}`).then((res) => {
-            console.log(res.data.product);
-            setTitle(res.data.product.title);
-            setPirce(res.data.product.price);
-            setdescription(res.data.product.description);
+            console.log(res.data?.product);
+            setTitle(res.data?.product?.title);
+            setPirce(res.data?.product?.price);
+            setdescription(res.data?.product?.description);
         })
             .catch((err) => console.log(err.message))
     }, [id])
+
     return (
         <form className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg space-y-4 my-[200px]">
             <h2 className="text-2xl font-bold text-center text-gray-800">Add Name & Stream</h2>
@@ -76,7 +79,7 @@ export default function Createproducts() {
             </div>
 
             <button
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => HandleUpdate(e)
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleUpdate(e)
                 }
                 type="submit"
                 className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"

@@ -14,7 +14,7 @@ export type Product = {
   _id : string;
 };
 
-export type resProduct = {
+export type ResponseProduct = {
   message: string;
   products: Product[];
   success: boolean;

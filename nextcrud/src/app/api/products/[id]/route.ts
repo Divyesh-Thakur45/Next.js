@@ -1,7 +1,10 @@
+// import connectDB from "@/_lib/mongodb";
 import connectDB from "@/_lib/mongodb";
-import productModel from "@/models/Post";
+import productModel from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
+// import { withDB } from "@/_lib/withDB";
 
+//GET function for get one product only 
 export async function GET(_: NextRequest, {params} : {params : {id : string}}){
     try {
         await connectDB()
@@ -24,6 +27,7 @@ export async function GET(_: NextRequest, {params} : {params : {id : string}}){
     }
 }
 
+// DELETE function for delete product
 export async function DELETE(_: NextRequest, {params} : {params : {id : string}}){
     try {
         await connectDB()
@@ -48,10 +52,11 @@ export async function DELETE(_: NextRequest, {params} : {params : {id : string}}
     }
 }
 
-export async function PATCH(requvest: NextRequest, {params} : {params : {id : string}}){
+//PATCH function for updated product 
+export async function PATCH(request: NextRequest, {params} : {params : {id : string}}){
     try {
         await connectDB()
-        const body = await requvest.json()
+        const body = await request.json()
         const isUser = await productModel.findById(params.id)
         if(!isUser){
             return NextResponse.json({

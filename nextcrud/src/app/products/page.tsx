@@ -1,13 +1,14 @@
-import { Product, resProduct } from "@/types/AllType";
+import { Product, ResponseProduct } from "@/types/Types";
 import axios from "axios";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
 
 export default async function ProductPage() {
+
     let products: Product[] = [];
 
     try {
-        const res = await axios.get<resProduct>("http://localhost:3000/api/products");
+        const res = await axios.get<ResponseProduct>("http://localhost:3000/api/products");
         products = res.data.products;
         console.log(products)
     } catch (error) {
