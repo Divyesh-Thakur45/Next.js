@@ -13,6 +13,7 @@ export default function Createproducts() {
     const [flag, setFlag] = useState<string>("false");
     const [file, setFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string>("");
+    console.log(previewUrl)
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<string>("");
     const [description, setDescription] = useState<string>("");
@@ -111,7 +112,7 @@ export default function Createproducts() {
 
                     {/* Show file name or default text */}
                     <span className="text-sm text-gray-600 max-w-[120px] truncate">
-                        {file ? file.name : "No file chosen"}
+                        {previewUrl ? previewUrl : "No file chosen"}
                     </span>
 
                     {previewUrl && (

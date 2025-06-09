@@ -2,8 +2,9 @@ import userModel from "@/models/User";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import connectDB from "@/_lib/mongodb";
+import { withDB } from "@/_lib/withDB";
 
-export async function POST(request: NextRequest) {
+const SignupHandler = async (request: NextRequest) => {
   try {
     await connectDB();
     const body = await request.json();
@@ -30,4 +31,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const POST = withDB(SignupHandler);

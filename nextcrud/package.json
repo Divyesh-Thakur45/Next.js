@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
     "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
     "cookies-next": "^6.0.0",
@@ -18,7 +19,11 @@
     "next": "15.3.3",
     "next-connect": "^1.0.0-next.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.57.0",
+    "react-hot-toast": "^2.5.2",
+    "sweetalert2": "^11.22.0",
+    "zod": "^3.25.56"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

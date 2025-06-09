@@ -1,18 +1,16 @@
-// import connectDB from "@/_lib/mongodb";
-import connectDB from "@/_lib/mongodb";
 import productModel from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import fs from "fs/promises";
-// import { withDB } from "@/_lib/withDB";
+import { withDB } from "@/_lib/withDB";
 
 //GET function for get one product only
-export async function GET(
+const GetHandler = async (
   _: NextRequest,
   { params }: { params: { id: string } }
-) {
+) => {
   try {
-    await connectDB();
+    // await connectDB();
     const isExist = await productModel.findById(params.id);
     if (!isExist) {
       return NextResponse.json({
@@ -30,15 +28,15 @@ export async function GET(
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 // DELETE function for delete product
-export async function DELETE(
+const DeleteHandler = async (
   _: NextRequest,
   { params }: { params: { id: string } }
-) {
+) => {
   try {
-    await connectDB();
+    // await connectDB();
     const isUser = await productModel.findById(params.id);
     if (!isUser) {
       return NextResponse.json({
@@ -67,15 +65,15 @@ export async function DELETE(
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 //PATCH function for updated product
-export async function PATCH(
+const PatchHandler = async (
   request: NextRequest,
   { params }: { params: { id: string } }
-) {
+) => {
   try {
-    await connectDB();
+    // await connectDB();
 
     const formData = await request.formData();
     const file = formData.get("image") as File | null;
@@ -157,4 +155,8 @@ export async function PATCH(
       success: false,
     });
   }
-}
+};
+
+export const GET = withDB(GetHandler);
+export const PATCH = withDB(PatchHandler);
+export const DELETE = withDB(DeleteHandler);

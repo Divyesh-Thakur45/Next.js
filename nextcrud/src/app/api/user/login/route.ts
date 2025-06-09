@@ -4,9 +4,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import connectDB from "@/_lib/mongodb";
+import { withDB } from "@/_lib/withDB";
 // getCookie
 
-export async function POST(request: NextRequest) {
+const LoginHandler = async (request: NextRequest) => {
   try {
     await connectDB();
     const body = await request.json();
@@ -44,4 +45,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const POST = withDB(LoginHandler);
