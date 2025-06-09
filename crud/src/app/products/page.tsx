@@ -31,7 +31,6 @@ export default async function ProductPage() {
                                     Update
                                 </button>
                             </Link>
-                            {/* Delete button should be inside client component */}
                             <DeleteButton id={e.id} />
                         </div>
                     </div>

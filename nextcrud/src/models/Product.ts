@@ -1,16 +1,16 @@
 import { Schema, Document, model, models } from "mongoose";
 
 interface productData extends Document {
-  // image? : string;
+  image?: string;
   title: string;
   price: string;
   description: string;
 }
 const productSchema: Schema = new Schema<productData>({
-  // image :{
-  //     type : String,
-  //     required : false,
-  // },
+  image: {
+    type: String,
+    required: false,
+  },
   title: {
     type: String,
     required: true,

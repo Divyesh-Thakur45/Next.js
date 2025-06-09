@@ -2,6 +2,8 @@ import { Product, ResponseProduct } from "@/types/Types";
 import axios from "axios";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
+import dp from "../../../public/defaultimage/cat2.jpg";
+import Image from "next/image";
 
 export default async function ProductPage() {
 
@@ -10,7 +12,7 @@ export default async function ProductPage() {
     try {
         const res = await axios.get<ResponseProduct>("http://localhost:3000/api/products");
         products = res.data.products;
-        console.log(products)
+        // console.log(products)
     } catch (error) {
         console.error("Error fetching products:", error);
     }
@@ -24,11 +26,21 @@ export default async function ProductPage() {
                         key={idx}
                         className="p-4 bg-white rounded-lg shadow hover:shadow-md transition-all duration-200"
                     >
-                        <h1 className="text-xl font-semibold text-blue-600">{e.title}</h1>
-                        <h2 className="text-gray-600">{e.price}</h2>
-                        <h2 className="text-gray-600">{e.description}</h2>
+                        <div className="relative w-full h-[200px] mb-3">
+                            <Image
+                                src={e.image ? e.image : dp}
+                                alt="Product Image"
+                                fill
+                                className="object-cover rounded"
+                                sizes="(max-width: 768px) 100vw, 33vw"
+                                priority
+                            />
+                        </div>
+                        <h1 className="text-xl font-semibold text-blue-600">{e?.title}</h1>
+                        <h2 className="text-gray-600">{e?.price}</h2>
+                        <h2 className="text-gray-600">{e?.description}</h2>
                         <div className="flex justify-between">
-                            <Link href={`/products/${e._id}/edit`}>
+                            <Link href={`/products/${e?._id}/edit`}>
                                 <button className="text-green-400 border px-[18px] rounded hover:bg-green-400 hover:text-white">
                                     Update
                                 </button>

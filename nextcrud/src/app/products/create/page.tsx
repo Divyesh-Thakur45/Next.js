@@ -6,13 +6,29 @@ import { useState } from "react";
 
 export default function Createproducts() {
     const router = useRouter()
+    const [file, setfile] = useState<File | null | string>("")
     const [title, setTitle] = useState<string>("")
-    const [price, setPirce] = useState<string>("")
+    const [price, setPrice] = useState<string>("")
     const [description, setdescription] = useState<string>("")
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (!title || !price || !description) return;
-        e.preventDefault()
-        axios.post("http://localhost:3000/api/products", { title, price, description }).then((res) => {
+        e.preventDefault();
+        if (!title || !price || !description) {
+            alert("All fields including image are required!");
+            return;
+        }
+        const data = new FormData();
+        if (file) {
+            data.append("image", file);
+        }
+        data.append("title", title);
+        data.append("price", price);
+        data.append("description", description);
+
+        axios.post("http://localhost:3000/api/products", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        }).then((res) => {
             console.log(res.data);
             router.push("/products");
         })
@@ -21,7 +37,19 @@ export default function Createproducts() {
     return (
         <form className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg space-y-4 my-[200px]">
             <h2 className="text-2xl font-bold text-center text-gray-800">Add Name & Stream</h2>
-
+            <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    image
+                </label>
+                <input
+                    onChange={(e) => setfile(e.target.files?.[0] || null)}
+                    type="file"
+                    id="file"
+                    name="file"
+                    placeholder="Select image"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
             <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     title
@@ -40,7 +68,7 @@ export default function Createproducts() {
                     price
                 </label>
                 <input
-                    onChange={(e) => setPirce(e.target.value)}
+                    onChange={(e) => setPrice(e.target.value)}
                     type="text"
                     id="stream"
                     name="stream"

@@ -8,10 +8,11 @@
 // };
 
 export type Product = {
-  title: number;
+  image: string;
+  title: string;
   price: string;
   description: string;
-  _id : string;
+  _id: string;
 };
 
 export type ResponseProduct = {
