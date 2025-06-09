@@ -1,10 +1,11 @@
 import connectDB from "@/_lib/mongodb";
 
-export const withDB = (handler: Function) => {
-  return async function (...args: any[]) {
+// generic handler wrapper
+export function withDB<Args extends unknown[], Return>(
+  handler: (...args: Args) => Return | Promise<Return>
+): (...args: Args) => Promise<Return> {
+  return async (...args: Args): Promise<Return> => {
     await connectDB();
-    return handler(...args);
+    return await handler(...args);
   };
-};
-
-// helper function
+}

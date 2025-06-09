@@ -1,4 +1,3 @@
-// import { globalProp } from '@/types/AllType';
 import mongoose from "mongoose";
 
 const MONGODB_URL: string = "mongodb://127.0.0.1:27017/nextcrud";

@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import connectDB from "@/_lib/mongodb";
 import { withDB } from "@/_lib/withDB";
-// getCookie
 
 const LoginHandler = async (request: NextRequest) => {
   try {
@@ -35,7 +34,7 @@ const LoginHandler = async (request: NextRequest) => {
       secure: true,
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 24 * 7,
     });
     return NextResponse.json({
       status: 200,

@@ -1,13 +1,10 @@
-// import connectDB from "@/_lib/mongodb";
 import { withDB } from "@/_lib/withDB";
 import productModel from "@/models/Product";
 import { writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET function for get all products
 export const GET = withDB(async () => {
   try {
-    // await connectDB();
     const data = await productModel.find();
     return NextResponse.json({
       status: 201,
@@ -21,8 +18,6 @@ export const GET = withDB(async () => {
 });
 export const POST = withDB(async (request: NextRequest) => {
   try {
-    // await connectDB();
-
     const formData = await request.formData();
     const file = formData.get("image") as File | null;
     const title = formData.get("title") as string;

@@ -10,7 +10,6 @@ const GetHandler = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    // await connectDB();
     const isExist = await productModel.findById(params.id);
     if (!isExist) {
       return NextResponse.json({
@@ -36,7 +35,6 @@ const DeleteHandler = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    // await connectDB();
     const isUser = await productModel.findById(params.id);
     if (!isUser) {
       return NextResponse.json({
@@ -73,8 +71,6 @@ const PatchHandler = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    // await connectDB();
-
     const formData = await request.formData();
     const file = formData.get("image") as File | null;
     const title = formData.get("title") as string;
@@ -125,7 +121,6 @@ const PatchHandler = async (
 
         newImagePath = `/uploads/${uniqueFileName}`;
       } else {
-        // If image is removed but not replaced
         newImagePath = "";
       }
     }
