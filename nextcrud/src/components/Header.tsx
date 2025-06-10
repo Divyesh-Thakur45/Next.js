@@ -6,12 +6,15 @@ import { useEffect, useState } from "react";
 
 export default function Header() {
     const [token, setToken] = useState<boolean>(false); // 👈 track login state
-
+    const [userID, setuserID] = useState<string>("")
     useEffect(() => {
+        const id = localStorage.getItem("id")
         const stored = localStorage.getItem("isLogin");
-        if (stored) {
+        if (stored && id) {
             const parsed: boolean = JSON.parse(stored);
             setToken(parsed);
+            const idParsed: string = JSON.parse(id)
+            setuserID(idParsed)
         }
     }, []);
 
@@ -19,10 +22,9 @@ export default function Header() {
     function resetClick() {
         axios
             .get("/api/user/logout")
-            .then((res) => {
-                console.log(res.data);
-                localStorage.setItem("isLogin", JSON.stringify(false));
-                setToken(false); // 👈 update state immediately
+            .then(() => {
+                localStorage.removeItem("id")
+                localStorage.removeItem("isLogin")
                 window.location.href = "/users/login";
             })
             .catch((err) => console.log(err));
@@ -38,7 +40,7 @@ export default function Header() {
                 <nav className="space-x-4">
                     {token ? (
                         <>
-                            <Link href="/products" className="hover:underline">
+                            <Link href={`/products/users/${userID}`} className="hover:underline">
                                 All Products
                             </Link>
                             <Link href="/products/create" className="hover:underline">

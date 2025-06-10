@@ -5,7 +5,7 @@ import fs from "fs/promises";
 import { withDB } from "@/_lib/withDB";
 
 //GET function for get one product only
-const GetHandler = async (
+const GetOneHandler = async (
   _: NextRequest,
   { params }: { params: { id: string } }
 ) => {
@@ -152,6 +152,6 @@ const PatchHandler = async (
   }
 };
 
-export const GET = withDB(GetHandler);
+export const GET = withDB(GetOneHandler);
 export const PATCH = withDB(PatchHandler);
 export const DELETE = withDB(DeleteHandler);

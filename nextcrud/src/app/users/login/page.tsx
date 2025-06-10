@@ -29,11 +29,12 @@ export default function SignupPage() {
         try {
             const res = await axios.post("http://localhost:3000/api/user/login", data);
             if (res?.data?.success) {
+                localStorage.setItem("id", JSON.stringify(res.data._id))
                 if (res?.data?.success == true) {
                     localStorage.setItem("isLogin", JSON.stringify(res?.data?.success))
                 }
                 toast.success("Signin Successfully 🎉")
-                window.location.href = "/products";
+                window.location.href = `/products/users/${res.data._id}`;
             } else {
                 localStorage.setItem("isLogin", JSON.stringify(res?.data?.success))
             }

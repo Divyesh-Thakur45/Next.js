@@ -3,21 +3,16 @@ import productModel from "@/models/Product";
 import { writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = withDB(async () => {
-  try {
-    const data = await productModel.find();
-    return NextResponse.json({
-      status: 201,
-      message: "Create Product Successfully !🎉",
-      products: data,
-      success: true,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
 export const POST = withDB(async (request: NextRequest) => {
   try {
+    const userHeader = request.cookies.get("x-user")?.value;
+    if (!userHeader) {
+      return NextResponse.json(
+        { error: "User not authenticated" },
+        { status: 401 }
+      );
+    }
+    const user = JSON.parse(userHeader);
     const formData = await request.formData();
     const file = formData.get("image") as File | null;
     const title = formData.get("title") as string;
@@ -39,8 +34,8 @@ export const POST = withDB(async (request: NextRequest) => {
       const bytes = await file.arrayBuffer();
 
       const buffer = Buffer.from(bytes);
-
-      const filePath = `./public/uploads/${file.name}`;
+      const uniqueFileName = `${Date.now()}-${file.name}`;
+      const filePath = `./public/uploads/${uniqueFileName}`;
       await writeFile(filePath, buffer);
       imagePath = `/uploads/${file.name}`;
     }
@@ -50,6 +45,7 @@ export const POST = withDB(async (request: NextRequest) => {
       price,
       description,
       image: imagePath,
+      userID: user._id,
     });
 
     return NextResponse.json({

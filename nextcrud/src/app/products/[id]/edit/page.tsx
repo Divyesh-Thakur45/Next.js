@@ -35,7 +35,6 @@ export default function Createproducts() {
         resolver: zodResolver(productSchema),
     });
 
-    // ✅ Fetch product and prefill form
     useEffect(() => {
         axios
             .get(`http://localhost:3000/api/products/${id}`)

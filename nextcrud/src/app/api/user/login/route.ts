@@ -15,7 +15,7 @@ const LoginHandler = async (request: NextRequest) => {
     if (!isExist) {
       return NextResponse.json({
         status: 400,
-        message: "Please signup first ⚠️",
+        message: "Please signup first",
         success: false,
       });
     }
@@ -23,7 +23,7 @@ const LoginHandler = async (request: NextRequest) => {
     if (!comparePassword) {
       return NextResponse.json({
         status: 400,
-        message: "Password is incorrect ❌",
+        message: "Password is incorrect",
         success: false,
       });
     }
@@ -38,8 +38,9 @@ const LoginHandler = async (request: NextRequest) => {
     });
     return NextResponse.json({
       status: 200,
-      message: "Login successfully 🎉",
+      message: "Login successfully",
       success: true,
+      _id: isExist._id,
     });
   } catch (error) {
     console.log(error);

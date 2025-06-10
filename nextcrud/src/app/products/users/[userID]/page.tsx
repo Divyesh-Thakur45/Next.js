@@ -1,18 +1,20 @@
-import { Product, ResponseProduct } from "@/types/Types";
 import axios from "axios";
-import Link from "next/link";
-import DeleteButton from "./DeleteButton";
-import dp from "../../../public/defaultimage/cat2.jpg";
+import { Product, ResponseProduct } from "@/types/Types";
 import Image from "next/image";
+import Link from "next/link";
+import dp from "../../../../../public/defaultimage/cat2.jpg";
+import DeleteButton from "../../../../components/DeleteButton";
 
-export default async function ProductPage() {
-
+export default async function ProductPage({ params }: { params: { userID: string } }) {
     let products: Product[] = [];
-
+    // console.log(params.userID)
     try {
-        const res = await axios.get<ResponseProduct>("http://localhost:3000/api/products");
-        products = res.data.products;
-        // console.log(products)
+        if (params.userID) {
+            const res = await axios.get<ResponseProduct>(
+                `http://localhost:3000/api/products/all/${params?.userID}`);
+            console.log(res.data)
+            products = res.data.products;
+        }
     } catch (error) {
         console.error("Error fetching products:", error);
     }

@@ -5,6 +5,7 @@ interface productData extends Document {
   title: string;
   price: string;
   description: string;
+  userID: string;
 }
 const productSchema: Schema = new Schema<productData>({
   image: {
@@ -20,6 +21,10 @@ const productSchema: Schema = new Schema<productData>({
     required: true,
   },
   description: {
+    type: String,
+    required: true,
+  },
+  userID: {
     type: String,
     required: true,
   },

@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +18,7 @@ type FormData = z.infer<typeof schema>;
 
 export default function Createproducts() {
     const router = useRouter();
+    const [userID, setuserID] = useState<string>("")
     const [file, setFile] = useState<File | null>(null);
 
     const {
@@ -46,12 +47,20 @@ export default function Createproducts() {
             });
 
             if (res.data.success) {
-                router.push("/products");
+                router.push(`/products/users/${userID}`);
             }
+            console.log(res.data)
         } catch (err) {
             console.error("Upload failed:", err);
         }
     };
+    useEffect(() => {
+        const localid = localStorage.getItem("id") as string
+        const idParse: string = JSON.parse(localid)
+        if (localid) {
+            setuserID(idParse)
+        }
+    }, [])
 
     return (
         <form

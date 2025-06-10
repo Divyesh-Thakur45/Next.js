@@ -27,13 +27,18 @@ export default function SignupPage() {
     const onSubmit = async (data: FormData) => {
         try {
             const res = await axios.post("http://localhost:3000/api/user/signup", data);
+            console.log(res.data)
             toast(res.data.message)
             if (res?.data?.success) {
+                localStorage.setItem("id", JSON.stringify(res.data.user._id))
+                setTimeout(() => {
+                    window.location.href = `/products/users/${res.data.user._id}`;
+                }, 1000);
                 localStorage.setItem("isLogin", JSON.stringify(res?.data?.success))
                 const loginRes = await axios.post("http://localhost:3000/api/user/login", data);
                 if (loginRes?.data?.success) {
                     toast.success("Signup Successfully 🎉")
-                    window.location.href = "/products";
+
                 }
             } else {
                 localStorage.setItem("isLogin", JSON.stringify(res?.data?.success))
