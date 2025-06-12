@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function Addtocard() {
     const [data, setData] = useState<cart[]>([]);
+    console.log(data)
     const [isShow, setisShow] = useState<boolean>(false)
     const handleDelete = (id: string) => {
         axios.delete(`http://localhost:3000/api/addtocart/${id}`)

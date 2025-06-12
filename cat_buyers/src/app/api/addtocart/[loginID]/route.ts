@@ -2,9 +2,8 @@ import connectDB from "@/lib/db";
 import addtocartModel from "@/models/addcart.model";
 import { NextRequest, NextResponse } from "next/server";
 
-// ✅ GET handler
 export async function GET(
-  request: NextRequest,
+  request: Request,
   context: { params: { loginID: string } }
 ) {
   try {
@@ -37,7 +36,6 @@ export async function GET(
   }
 }
 
-// ✅ DELETE handler (already correct)
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { loginID: string } }
