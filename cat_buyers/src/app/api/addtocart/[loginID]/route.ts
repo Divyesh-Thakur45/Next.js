@@ -2,15 +2,15 @@ import connectDB from "@/lib/db";
 import addtocartModel from "@/models/addcart.model";
 import { NextRequest, NextResponse } from "next/server";
 
+// ✅ GET handler
 export async function GET(
-  request: Request,
+  request: NextRequest,
   context: { params: { loginID: string } }
 ) {
   try {
     await connectDB();
     const { loginID } = context.params;
 
-    // Fetch all cart items for given loginID
     const data = await addtocartModel.find({ loginID });
 
     if (data.length === 0) {
@@ -37,6 +37,7 @@ export async function GET(
   }
 }
 
+// ✅ DELETE handler (already correct)
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { loginID: string } }
