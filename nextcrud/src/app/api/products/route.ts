@@ -1,10 +1,21 @@
+import initMiddleware from "@/_lib/init-middleware";
 import { withDB } from "@/_lib/withDB";
 import productModel from "@/models/Product";
 import { writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
+import Cors from "cors";
+
+const cors = initMiddleware(
+  Cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"], // ✅ Allow only this origin
+    methods: ["GET", "POST"], // Allowed methods
+    credentials: true, // If you're using cookies
+  })
+);
 
 export const POST = withDB(async (request: NextRequest) => {
   try {
+    await cors(request);
     const userHeader = request.cookies.get("x-user")?.value;
     if (!userHeader) {
       return NextResponse.json(

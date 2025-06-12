@@ -2,13 +2,14 @@ import connectDB from "@/lib/db";
 import addtocartModel from "@/models/addcart.model";
 import { NextRequest, NextResponse } from "next/server";
 
+// ✅ GET handler to fetch cart data for a specific loginID
 export async function GET(
-  request: Request,
-  context: { params: { loginID: string } }
+  req: NextRequest,
+  { params }: { params: { loginID: string } }
 ) {
   try {
     await connectDB();
-    const { loginID } = context.params;
+    const { loginID } = params;
 
     const data = await addtocartModel.find({ loginID });
 
@@ -27,7 +28,7 @@ export async function GET(
       success: true,
     });
   } catch (error) {
-    console.error("Error in fetch one data:", error);
+    console.error("Error in GET handler:", error);
     return NextResponse.json({
       status: 500,
       message: "Server error",
@@ -36,23 +37,25 @@ export async function GET(
   }
 }
 
+// ✅ DELETE handler to delete a specific cart item by its ID
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { loginID: string } }
 ) {
   try {
     await connectDB();
+    const { loginID } = params;
 
-    const isDelete = await addtocartModel.findOne({ _id: params.loginID });
+    const isDelete = await addtocartModel.findOne({ _id: loginID });
     if (!isDelete) {
       return NextResponse.json({
         status: 400,
-        message: "don't have cat",
+        message: "Cart item not found",
         success: false,
       });
     }
 
-    const deleteData = await addtocartModel.findByIdAndDelete(params.loginID);
+    const deleteData = await addtocartModel.findByIdAndDelete(loginID);
     return NextResponse.json({
       status: 200,
       message: "Deleted successfully",
