@@ -13,12 +13,14 @@ export type CatResponse = {
   catsData: Cat[];
 };
 
-// /types/type.ts
+// @/types/type.ts
+
 export interface cart {
   _id: string;
   name: string;
-  image: string;
   price: number;
+  image: string;
+  loginID: string;
 }
 
 export interface cartResponse {

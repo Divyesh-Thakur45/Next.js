@@ -2,14 +2,24 @@ import connectDB from "@/lib/db";
 import addtocartModel from "@/models/addcart.model";
 import { NextRequest, NextResponse } from "next/server";
 
-// ✅ GET handler to fetch cart data for a specific loginID
+// ✅ GET handler - Get cart data by loginID
 export async function GET(
   req: NextRequest,
   { params }: { params: { loginID: string } }
 ) {
   try {
     await connectDB();
+
     const { loginID } = params;
+
+    // ✅ Validate loginID
+    if (!loginID || typeof loginID !== "string") {
+      return NextResponse.json({
+        status: 400,
+        message: "Invalid login ID",
+        success: false,
+      });
+    }
 
     const data = await addtocartModel.find({ loginID });
 
@@ -37,19 +47,28 @@ export async function GET(
   }
 }
 
-// ✅ DELETE handler to delete a specific cart item by its ID
+// ✅ DELETE handler - Delete cart item by _id
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { loginID: string } }
 ) {
   try {
     await connectDB();
+
     const { loginID } = params;
 
-    const isDelete = await addtocartModel.findOne({ _id: loginID });
-    if (!isDelete) {
+    if (!loginID || typeof loginID !== "string") {
       return NextResponse.json({
         status: 400,
+        message: "Invalid ID",
+        success: false,
+      });
+    }
+
+    const item = await addtocartModel.findOne({ _id: loginID });
+    if (!item) {
+      return NextResponse.json({
+        status: 404,
         message: "Cart item not found",
         success: false,
       });
